@@ -12,7 +12,7 @@ public class FlightTest {
 
     @Before
     public void setUp() {
-        plane = new Plane(PlaneType.BOEING747);
+        plane = new Plane(PlaneType.BEECHCRAFT1900);
         flight = new Flight(plane, "FR213", AirportCode.CDG, AirportCode.GLA, "11:00");
         passenger1 = new Passenger("Dave", 2);
         passenger2 = new Passenger("Gemma", 3);
@@ -20,7 +20,7 @@ public class FlightTest {
 
     @Test
     public void hasPlane() {
-        assertEquals(5, flight.getPlane().getCapacity());
+        assertEquals(3, flight.getPlane().getCapacity());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class FlightTest {
 
     @Test
     public void canCalculateAvailableSeats__noPassengers() {
-        assertEquals(5, flight.availableSeats());
+        assertEquals(3, flight.availableSeats());
     }
 
     @Test
@@ -69,6 +69,15 @@ public class FlightTest {
     @Test
     public void canCalculateAvailableSeats__withPassengersBooked() {
         flight.bookPassenger(passenger1);
-        assertEquals(4, flight.availableSeats());
+        assertEquals(2, flight.availableSeats());
+    }
+
+    @Test
+    public void cannotBookPassenger__NoSpace() {
+        flight.bookPassenger(passenger1);
+        flight.bookPassenger(passenger1);
+        flight.bookPassenger(passenger1);
+        flight.bookPassenger(passenger1);
+        assertEquals(3, flight.getPassengers());
     }
 }

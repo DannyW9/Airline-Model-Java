@@ -48,6 +48,8 @@ public class Flight {
     }
 
     public void bookPassenger(Passenger passenger) {
-        this.passengers.add(passenger);
+        if (availableSeats() > 0) {
+            this.passengers.add(passenger);
+        }
     }
 }
