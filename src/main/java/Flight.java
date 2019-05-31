@@ -42,4 +42,12 @@ public class Flight {
     public String getFlightNumber() {
         return this.flightNumber;
     }
+
+    public int availableSeats() {
+        return (this.plane.getCapacity() - this.getPassengers());
+    }
+
+    public void bookPassenger(Passenger passenger) {
+        this.passengers.add(passenger);
+    }
 }
