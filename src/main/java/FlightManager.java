@@ -21,4 +21,10 @@ public class FlightManager {
     public int remainingBagWeight(Flight flight) {
         return reservedBagWeight(flight) - bookedBagWeight(flight);
     }
+
+    public void bookPassengerOnFlight(Flight flight, Passenger passenger){
+        if (passenger.getBags() * calculateBagWeight(flight) <= remainingBagWeight(flight)){
+            flight.bookPassenger(passenger);
+        }
+    }
 }

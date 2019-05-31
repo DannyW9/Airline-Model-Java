@@ -47,4 +47,22 @@ public class FlightManagerTest {
         flight1.bookPassenger(passenger1);
         assertEquals(6, flightManager.remainingBagWeight(flight1));
     }
+
+    @Test
+    public void canBookPassengerOntoPlane() {
+        flightManager.bookPassengerOnFlight(flight1, passenger1);
+        assertEquals(1, flight1.getPassengers());
+        assertEquals(4, flightManager.bookedBagWeight(flight1));
+        assertEquals(6, flightManager.remainingBagWeight(flight1));
+    }
+
+    @Test
+    public void cannotBookPassengerOntoPlane__BagsOverWeight() {
+        flightManager.bookPassengerOnFlight(flight1, passenger1);
+        flightManager.bookPassengerOnFlight(flight1, passenger1);
+        flightManager.bookPassengerOnFlight(flight1, passenger1);
+        assertEquals(2, flight1.getPassengers());
+        assertEquals(8, flightManager.bookedBagWeight(flight1));
+        assertEquals(2, flightManager.remainingBagWeight(flight1));
+    }
 }
