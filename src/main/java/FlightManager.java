@@ -45,5 +45,28 @@ public class FlightManager {
         return arr;
     }
 
+    public Passenger findPassengerBySeatNumber(ArrayList<Passenger> passengers, int seatNumber) {
+        ArrayList<Passenger> newSearchArray;
+        int middleIndex = 0;
+        int middleValue = passengers.get(middleIndex).getSeatNumber();
+
+        if (passengers.size() == 0) {
+            return null;
+        }
+        if (passengers.size() > 1) {
+            middleIndex = passengers.size() / 2;
+        }
+        if (seatNumber == middleValue) {
+            return passengers.get(middleIndex);
+        }
+
+        if (seatNumber < middleValue) {
+            newSearchArray = new ArrayList<Passenger>(passengers.subList(0, middleIndex));
+        } else {
+            newSearchArray = new ArrayList<Passenger>(passengers.subList(middleIndex + 1, passengers.size()));
+        }
+        return findPassengerBySeatNumber(newSearchArray, seatNumber);
+    }
 
 }
+

@@ -1,7 +1,10 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class FlightManagerTest {
 
@@ -13,6 +16,7 @@ public class FlightManagerTest {
     private Passenger passenger2;
     private Passenger passenger3;
     private Passenger passenger4;
+    private Passenger passenger5;
     private FlightManager flightManager;
 
     @Before
@@ -24,9 +28,10 @@ public class FlightManagerTest {
         flight2 = new Flight(plane2, "FR213", AirportCode.PRG, AirportCode.DUB, "13:00");
         flight2.determineSeatNumbers();
         passenger1 = new Passenger("Dave", 2);
-        passenger2 = new Passenger("Gemma", 3);
-        passenger3 = new Passenger("Pablo", 2);
-        passenger4 = new Passenger("Lauren", 3);
+        passenger2 = new Passenger("Gemma", 1);
+        passenger3 = new Passenger("Pablo", 1);
+        passenger4 = new Passenger("Lauren", 1);
+        passenger5 = new Passenger("James", 1);
         flightManager = new FlightManager();
     }
 
@@ -49,7 +54,7 @@ public class FlightManagerTest {
     public void canDetermineHowMuchBaggageWeightIsCurrentlyBooked__WithPassengers() {
         flight1.bookPassenger(passenger1);
         flight1.bookPassenger(passenger2);
-        assertEquals(10, flightManager.bookedBagWeight(flight1));
+        assertEquals(6, flightManager.bookedBagWeight(flight1));
     }
 
     @Test
@@ -79,10 +84,21 @@ public class FlightManagerTest {
 
     @Test
     public void canSortPassengersBySeatNumber() {
-        flightManager.bookPassengerOnFlight(flight2, passenger1);
-        flightManager.bookPassengerOnFlight(flight2, passenger2);
-        flightManager.bookPassengerOnFlight(flight2, passenger3);
-        flightManager.bookPassengerOnFlight(flight2, passenger4);
-        assertEquals(4, flightManager.sortPassengersBySeatNumber(flight2).size());
+        flightManager.bookPassengerOnFlight(flight1, passenger1);
+        flightManager.bookPassengerOnFlight(flight1, passenger2);
+        flightManager.bookPassengerOnFlight(flight1, passenger3);
+        flightManager.bookPassengerOnFlight(flight1, passenger4);
+        assertEquals("x", flightManager.sortPassengersBySeatNumber(flight1).size());
+    }
+
+    @Test
+    public void canFindAPassengerBySeatNumber() {
+        flightManager.bookPassengerOnFlight(flight1, passenger1);
+        flightManager.bookPassengerOnFlight(flight1, passenger2);
+        flightManager.bookPassengerOnFlight(flight1, passenger3);
+        flightManager.bookPassengerOnFlight(flight1, passenger4);
+        flightManager.bookPassengerOnFlight(flight1, passenger5);
+        ArrayList<Passenger> passengers = flight1.getPassengerList();
+        assertNotEquals(null, flightManager.findPassengerBySeatNumber(passengers, 4));
     }
 }
