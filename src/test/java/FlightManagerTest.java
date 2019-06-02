@@ -15,6 +15,7 @@ public class FlightManagerTest {
     public void setUp() {
         plane = new Plane(PlaneType.BOEING747);
         flight1 = new Flight(plane, "FR213", AirportCode.PRG, AirportCode.DUB, "13:00");
+        flight1.determineSeatNumbers();
         passenger1 = new Passenger("Dave", 2);
         passenger2 = new Passenger("Gemma", 3);
         flightManager = new FlightManager();
@@ -54,6 +55,7 @@ public class FlightManagerTest {
         assertEquals(1, flight1.getPassengers());
         assertEquals(4, flightManager.bookedBagWeight(flight1));
         assertEquals(6, flightManager.remainingBagWeight(flight1));
+        assertEquals("FR213", passenger1.getFlight());
     }
 
     @Test

@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class FlightTest {
 
@@ -14,6 +15,7 @@ public class FlightTest {
     public void setUp() {
         plane = new Plane(PlaneType.BEECHCRAFT1900);
         flight = new Flight(plane, "FR213", AirportCode.CDG, AirportCode.GLA, "11:00");
+        flight.determineSeatNumbers();
         passenger1 = new Passenger("Dave", 2);
         passenger2 = new Passenger("Gemma", 3);
         }
@@ -49,6 +51,11 @@ public class FlightTest {
     }
 
     @Test
+    public void hasSeatNumbers() {
+        assertEquals(3, flight.getSeatNumbers());
+    }
+
+    @Test
     public void canCalculateAvailableSeats__noPassengers() {
         assertEquals(3, flight.availableSeats());
     }
@@ -57,6 +64,8 @@ public class FlightTest {
     public void canBookPassengerOntoFlight() {
         flight.bookPassenger(passenger1);
         assertEquals(1, flight.getPassengers());
+        assertEquals(2, flight.getSeatNumbers());
+        assertNotEquals(0, passenger1.getSeatNumber());
     }
 
     @Test
@@ -79,5 +88,18 @@ public class FlightTest {
         flight.bookPassenger(passenger1);
         flight.bookPassenger(passenger1);
         assertEquals(3, flight.getPassengers());
+    }
+
+    @Test
+    public void canAssignFlightToPassenger() {
+        flight.assignFlight(passenger1);
+        assertEquals("FR213", passenger1.getFlight());
+    }
+
+    @Test
+    public void canAssignSeatNumber() {
+        flight.assignSeatNumber(passenger1);
+        assertEquals(2, flight.getSeatNumbers());
+        assertNotEquals(0, passenger1.getSeatNumber());
     }
 }

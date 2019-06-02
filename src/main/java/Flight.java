@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Flight {
 
@@ -8,6 +10,7 @@ public class Flight {
     private AirportCode destination;
     private AirportCode departureAirport;
     private String departureTime;
+    private ArrayList<Integer> seatNumbers;
 
     public Flight(Plane plane, String flightNumber, AirportCode destination, AirportCode departureAirport, String departureTime){
         this.passengers = new ArrayList<Passenger>();
@@ -16,6 +19,7 @@ public class Flight {
         this.destination = destination;
         this.departureAirport = departureAirport;
         this.departureTime = departureTime;
+        this.seatNumbers = new ArrayList<Integer>();
     }
 
 
@@ -43,18 +47,45 @@ public class Flight {
         return this.flightNumber;
     }
 
+    public int getSeatNumbers() {
+        return this.seatNumbers.size();
+    }
+
     public int availableSeats() {
         return (this.plane.getCapacity() - this.getPassengers());
     }
 
-
-    public void bookPassenger(Passenger passenger) {
-        if (availableSeats() > 0) {
-            this.passengers.add(passenger);
-        }
+    public void assignFlight(Passenger passenger){
+        passenger.assignFlight(this);
     }
 
     public ArrayList<Passenger> getPassengerList() {
         return this.passengers;
     }
+
+    public void randomiseSeatNumbers() {
+        Collections.shuffle(this.seatNumbers);
+    }
+
+    public void determineSeatNumbers() {
+        int capacity = this.getPlane().getCapacity();
+        for (int i = 1; i <= capacity; i++) {
+            this.seatNumbers.add(i);
+        }
+        randomiseSeatNumbers();
+    }
+
+    public void assignSeatNumber(Passenger passenger) {
+        passenger.assignSeatNumber(seatNumbers.get(0));
+        seatNumbers.remove(0);
+    }
+
+    public void bookPassenger(Passenger passenger) {
+        if (availableSeats() > 0) {
+            this.passengers.add(passenger);
+            assignFlight(passenger);
+            assignSeatNumber(passenger);
+        }
+    }
+
 }
