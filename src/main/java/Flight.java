@@ -1,6 +1,8 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Flight {
 
@@ -9,16 +11,16 @@ public class Flight {
     private String flightNumber;
     private AirportCode destination;
     private AirportCode departureAirport;
-    private String departureTime;
+    private GregorianCalendar departureTime;
     private ArrayList<Integer> seatNumbers;
 
-    public Flight(Plane plane, String flightNumber, AirportCode destination, AirportCode departureAirport, String departureTime){
+    public Flight(Plane plane, String flightNumber, AirportCode destination, AirportCode departureAirport){
         this.passengers = new ArrayList<Passenger>();
         this.plane = plane;
         this.flightNumber = flightNumber;
         this.destination = destination;
         this.departureAirport = departureAirport;
-        this.departureTime = departureTime;
+        this.departureTime = new GregorianCalendar();
         this.seatNumbers = new ArrayList<Integer>();
     }
 
@@ -39,8 +41,12 @@ public class Flight {
         return this.departureAirport;
     }
 
-    public String getDepartureTime() {
-        return this.departureTime;
+    public void setDepartureTime(int year, int month, int day, int hour, int minute, int seconds) {
+        this.departureTime = new GregorianCalendar(year, month, day, hour, minute, seconds);
+    }
+
+    public Date getDepartureTime() {
+        return this.departureTime.getTime();
     }
 
     public String getFlightNumber() {
