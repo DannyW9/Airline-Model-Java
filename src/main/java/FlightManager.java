@@ -28,5 +28,22 @@ public class FlightManager {
         }
     }
 
+    public ArrayList<Passenger> sortPassengersBySeatNumber(Flight flight) {
+        int n = flight.getPassengerList().size();
+        Passenger temp = null;
+        ArrayList<Passenger> arr = flight.getPassengerList();
+
+        for (int x = 0; x < n; x++) {
+            for (int y = 1; y < n; y++) {
+                if (arr.get(y-1).getSeatNumber() > arr.get(y).getSeatNumber()){
+                    temp = arr.get(y-1);
+                    arr.set(y-1, arr.get(y));
+                    arr.set(y, temp);
+                }
+            }
+        }
+        return arr;
+    }
+
 
 }
